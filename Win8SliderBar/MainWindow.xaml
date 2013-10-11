@@ -1,0 +1,143 @@
+﻿<Window x:Class="Win8SliderBar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="桌面侧边栏" Width="155" Background="#1c1c1c" Opacity="0.9" Name="window" WindowStyle="None" ResizeMode="NoResize"  MouseLeave="window_MouseLeave" MouseMove="window_MouseEnter" Topmost="True" WindowStartupLocation="Manual" IsTabStop="False" Deactivated="window_Deactivated"
+        >
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border  Background="Transparent" Name="btnbd">
+                            <ContentPresenter Margin="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="btnbd" Value="Gray"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="btnbd" Value="#FF148691"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TabControl">
+            <Style.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true" Height="23">
+                                    <ContentPresenter ContentSource="Header" Margin="10,0,10,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter.Resources>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="false">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="#6A6A75"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" Value="#007ACC"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Grid KeyboardNavigation.TabNavigation="Local">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="#1c1c1c" BorderThickness="0,0,0,3" 
+                                BorderBrush="#007ACC">
+                                <TabPanel Name="HeaderPanel" Panel.ZIndex="1" Margin="0,0,4,-1" 
+                                IsItemsHost="True" KeyboardNavigation.TabIndex="1"/>
+                            </Border>
+                            <Border Grid.Row="1" Background="#1c1c1c"/>
+                            <ContentPresenter Grid.Row="1" Name="PART_SelectedContentHost" 
+                                            ContentSource="SelectedContent" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Path x:Key="FileIcon" Height="48" Width="48" Stretch="Fill" Data="F1 M 13,16L 23,16L 23,15C 23,13.8954 23.8954,13 25,13L 32,13C 33.1046,13 35,14.8954 35,16L 35,32L 13,32L 13,16 Z " Fill="#FFF9D948"/>
+        <Path x:Key="IeIcon" Height="48" Width="48" Stretch="Fill" Fill="#FF87C7FF"  Data="F1 M 25.5,12C 26.0925,12 26.6746,12.0448 27.243,12.1312C 30.5634,10.7031 33.4475,10.591 34.9919,12.1354C 36.2505,13.394 36.4089,15.5424 35.6514,18.0916C 36.5121,19.7037 37,21.5449 37,23.5L 36.9031,25L 30.924,25L 28,25L 20.076,25C 20.5124,27.8377 22.7747,30 25.5,30C 27.5358,30 29.3132,28.7934 30.2642,27L 36.4577,27C 34.9769,31.6398 30.6309,35 25.5,35C 24.0562,35 22.6745,34.7339 21.4013,34.2481C 17.4735,36.3152 13.9458,36.72 12.1766,34.9507C 9.325,32.0992 12.1207,24.6801 18.421,18.3799L 19.7217,17.1424C 17.8007,18.1472 15.8905,19.6027 14.2126,21.2874C 15.2441,15.9948 19.9056,12 25.5,12 Z M 25.5,18C 23.1053,18 21.068,19.6696 20.313,22L 30.687,22C 29.932,19.6696 27.8947,18 25.5,18 Z M 34.3018,13.6937C 33.4804,12.8723 32.112,12.7106 30.4314,13.108C 32.2784,13.9861 33.8542,15.342 34.9991,17.016C 35.2409,15.5863 35.032,14.4239 34.3018,13.6937 Z M 13.7957,34.1998C 15.0244,35.4285 17.477,35.1811 20.3677,33.7941C 17.6056,32.4143 15.4765,29.9555 14.5328,26.97C 12.8599,30.1436 12.4748,32.8789 13.7957,34.1998 Z "/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="1">
+            <TabItem Header="程序">
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Name="appPanel" Margin="2" Orientation="Vertical" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+                        </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="目录" >
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Name="directoryPanel" Margin="2" Orientation="Vertical" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="网址">
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Name="urlPanel" Margin="2" Orientation="Vertical" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FF3C3939" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Name="btnOption" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Click="btnOption_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Vertical">
+                            <Path Width="20" Height="20" Canvas.Left="14" Canvas.Top="14" Stretch="Fill" Fill="WhiteSmoke" Data="F1 M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.07,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " />
+                            <TextBlock Text="设置" Margin="0,3,0,0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Name="btnShutDown" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Click="btnShutDown_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Vertical">
+                            <Path Width="20" Height="20" Canvas.Left="14" Canvas.Top="14" Stretch="Fill" Fill="WhiteSmoke" Data="F1 M 26.6942,26.9646L 26.6942,25.093L 33.9107,14.813L 33.9107,14.7246L 27.3461,14.7246L 27.3461,11.8488L 38.3395,11.8488L 38.3395,13.8573L 31.2803,24L 31.2803,24.0888L 38.4525,24.0888L 38.4525,26.9646L 26.6942,26.9646 Z M 17.4492,31.9771L 17.4492,30.7661L 22.1187,24.1143L 22.1187,24.0571L 17.871,24.0571L 17.871,22.1963L 24.9844,22.1963L 24.9844,23.4959L 20.4167,30.0588L 20.4167,30.1163L 25.0575,30.1163L 25.0575,31.9771L 17.4492,31.9771 Z M 9.82666,35.9833L 9.82666,35.1026L 13.2227,30.2649L 13.2227,30.2233L 10.1335,30.2233L 10.1335,28.87L 15.3068,28.87L 15.3068,29.8152L 11.9849,34.5882L 11.9849,34.63L 15.36,34.63L 15.36,35.9833L 9.82666,35.9833 Z " />
+                            <TextBlock Text="关机" Margin="0,3,0,0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button Name="btnClose" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"  Click="btnClose_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Vertical">
+                            <Path Width="20" Height="20" Canvas.Left="14" Canvas.Top="14" Stretch="Fill" Fill="WhiteSmoke" Data="F1 M 23,23L 23,11L 26,11L 26,23L 23,23 Z M 36,25C 36,31.6274 30.6274,37 24,37C 17.3726,37 12,31.6274 12,25C 12,19.4085 15.8243,14.7102 21,13.3781L 21,17.5815C 18.0682,18.7683 16,21.6426 16,25C 16,29.4183 19.5817,33 24,33C 28.4183,33 32,29.4183 32,25C 32,22.0389 30.3912,19.4535 28,18.0703L 28,13.6828C 32.6608,15.3302 36,19.7751 36,25 Z " />
+                            <TextBlock Text="退出" Margin="0,3,0,0"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
